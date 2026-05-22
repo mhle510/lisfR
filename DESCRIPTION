@@ -1,0 +1,17 @@
+Package: lisfR
+Title: R Tools for LISF Workflows
+Version: 1.0.0
+Authors@R: person('Manh-Hung', 'Le', email = 'manh-hung.le@nasa.giv', role = c('aut')
+Description: R utilities for working with LISF
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports:
+    ncdf4,
+    terra,
+    data.table,
+    lubridate,
+    stringr,
+    tidyverse,
+    sf
