@@ -1,9 +1,6 @@
-library(lisfR)
-repo_path <- "~/Documents/GitHub/lisfR"
-setwd(repo_path)
 
-library(sf)
-source("R/calc_ldt_domain_bounds.R")
+library(lisfR)
+
 shp_path <- "inst/RedRiver/Hong_TB_all.shp"
 
 domain <- calc_ldt_domain_bounds(

@@ -1,7 +1,7 @@
 Package: lisfR
 Title: R Tools for LISF Workflows
 Version: 1.0.0
-Authors@R: person('Manh-Hung', 'Le', email = 'manh-hung.le@nasa.giv', role = c('aut')
+Authors@R: person("Manh-Hung", "Le", email = "manh-hung.le@nasa.gov", role = c("aut", "cre"))
 Description: R utilities for working with LISF
 License: MIT + file LICENSE
 Encoding: UTF-8
