@@ -19,7 +19,9 @@ calc_ldt_domain_bounds <- function(
     dy = dx,
     buffer_coef = 1.5,
     decimals = 4,
-    target_crs = 4326
+    target_crs = 4326,
+    plot = TRUE ,
+    verbose = TRUE
 ) {
   
   shp <- sf::st_read(shp_path, quiet = TRUE)
@@ -45,9 +47,72 @@ calc_ldt_domain_bounds <- function(
   right_lon <- round(geo_xmax - dx / 2, decimals + 1)
   right_lat <- round(geo_ymax - dy / 2, decimals + 1)
   
-  list(
-    left_lat = left_lat,
-    left_lon = left_lon,
+  # ----------------------------------------------------------------------
+  # Diagnostic base plot
+  # ----------------------------------------------------------------------
+  if (isTRUE(plot)) {
+    
+    # Actual domain rectangle (LDT grid extent)
+    domain_x <- c(geo_xmin, geo_xmax, geo_xmax, geo_xmin, geo_xmin)
+    domain_y <- c(geo_ymin, geo_ymin, geo_ymax, geo_ymax, geo_ymin)
+    
+    # Buffered cell-center POINTs (bottom-left and top-right)
+    pts_lon <- c(left_lon,  right_lon)
+    pts_lat <- c(left_lat,  right_lat)
+    
+    # Plot limits with a small margin so the red dots/labels aren't clipped
+    xr <- range(c(domain_x, pts_lon))
+    yr <- range(c(domain_y, pts_lat))
+    xpad <- diff(xr) * 0.05
+    ypad <- diff(yr) * 0.05
+    
+    op <- graphics::par(no.readonly = TRUE)
+    on.exit(graphics::par(op), add = TRUE)
+    
+    # Base canvas
+    plot(
+      NA, NA,
+      xlim = c(xr[1] - xpad, xr[2] + xpad),
+      ylim = c(yr[1] - ypad, yr[2] + ypad),
+      xlab = "Longitude", ylab = "Latitude",
+      main = "LDT Domain Bounds",
+      asp = 1
+    )
+    
+    # Basin boundary
+    plot(sf::st_geometry(shp), add = TRUE,
+         border = "grey40", col = NA, lwd = 1.5)
+    
+    # Actual domain rectangle
+    graphics::lines(domain_x, domain_y, col = "blue", lwd = 2, lty = 1)
+    
+    # Buffered POINTs as red dots
+    graphics::points(pts_lon, pts_lat, col = "red", pch = 19, cex = 1.4)
+    
+    # Label the points
+    graphics::text(left_lon,  left_lat,
+                   labels = sprintf("BL (%.4f, %.4f)", left_lon, left_lat),
+                   pos = 4, col = "red", cex = 0.8)
+    graphics::text(right_lon, right_lat,
+                   labels = sprintf("TR (%.4f, %.4f)", right_lon, right_lat),
+                   pos = 2, col = "red", cex = 0.8)
+    
+    # Legend
+    graphics::legend(
+      "topleft",
+      legend = c("Basin boundary", "Actual domain", "Buffered points (BL/TR)"),
+      col    = c("grey40", "blue", "red"),
+      lty    = c(1, 1, NA),
+      pch    = c(NA, NA, 19),
+      lwd    = c(1.5, 2, NA),
+      bty    = "n",
+      cex    = 0.8
+    )
+  }
+  
+  domain <- list(
+    left_lat  = left_lat,
+    left_lon  = left_lon,
     right_lat = right_lat,
     right_lon = right_lon,
     dx = dx,
@@ -58,4 +123,23 @@ calc_ldt_domain_bounds <- function(
     geo_ymax = geo_ymax,
     buffer_coef = buffer_coef
   )
+  
+  if (isTRUE(verbose)) {
+    cat(
+      sprintf("Run domain lower left lat:                                       %s\n", domain$left_lat),
+      sprintf("Run domain lower left lon:                                       %s\n", domain$left_lon),
+      sprintf("Run domain upper right lat:                                      %s\n", domain$right_lat),
+      sprintf("Run domain upper right lon:                                      %s\n", domain$right_lon),
+      sprintf("Run domain resolution (dx):                                      %s\n", domain$dx),
+      sprintf("Run domain resolution (dy):                                      %s\n", domain$dy)
+    )
+    cat(
+      sprintf("Run domain xmin:                                       %s\n", domain$geo_xmin),
+      sprintf("Run domain ymin:                                       %s\n", domain$geo_ymin),
+      sprintf("Run domain xmax:                                      %s\n", domain$geo_xmax),
+      sprintf("Run domain ymax:                                      %s\n", domain$geo_ymax)
+    )
+  }
+  
+  return(domain)
 }

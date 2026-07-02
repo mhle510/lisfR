@@ -10,7 +10,9 @@ calc_ldt_domain_bounds(
   dy = dx,
   buffer_coef = 1.5,
   decimals = 4,
-  target_crs = 4326
+  target_crs = 4326,
+  plot = TRUE,
+  verbose = TRUE
 )
 }
 \arguments{
