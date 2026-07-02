@@ -1,6 +1,7 @@
 setup/
+examples/
+lisfR.Rproj
 .Rhistory
 .RData
 .Ruserdata
 *.Rproj.user
-.Rproj.user

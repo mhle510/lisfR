@@ -1,2 +1,6 @@
-^.*\.Rproj$
+^setup$
+^examples$
+^lisfR\.Rproj$
+^\.github$
+^README\.Rmd$
 ^\.Rproj\.user$
