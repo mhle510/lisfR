@@ -10,7 +10,7 @@
 #' @param folder_2 Character. Path to the folder containing the second set of netCDF files.
 #' @param start_date Character. String in "YYYYMMDD" format.
 #' @param end_date Character. String in "YYYYMMDD" format.
-#' @param base_var Character. The base variable name to pass into \code{convert_netcdf_to_stacked_raster}.
+#' @param base_var Character. The base variable name to pass into \code{nc_to_raster}.
 #' @param var_1 Character. The specific layer name to extract from output 1 stack.
 #' @param var_2 Character. The specific layer name to extract from output 2 stack.
 #' @param nc_type_1 Character. \code{nc_type} argument for output 1 (default: "lis").
@@ -19,12 +19,27 @@
 #' @param name_2 Character. Label for output 2 in plots (default: "Output 2").
 #'
 #' @return Invisibly returns a list containing \code{domain_metrics} and \code{dates_processed}.
-#' 
+#' @importFrom stats cor
+#' @importFrom graphics legend lines par plot
 #' @export
 lis_compare_outputs <- function(folder_1, folder_2, start_date, end_date, 
                                 base_var, var_1, var_2, 
                                 nc_type_1 = "lis", nc_type_2 = "lis_ensemble",
                                 name_1 = "Output 1", name_2 = "Output 2") {
+  
+  compute_metrics <- function(obs, sim) {
+    valid_idx <- !is.na(obs) & !is.na(sim)
+    obs <- obs[valid_idx]
+    sim <- sim[valid_idx]
+    
+    if(length(obs) < 2) return(c(R = NA, RMSE = NA, ubRMSE = NA))
+    
+    r_val <- cor(obs, sim)
+    rmse_val <- sqrt(mean((sim - obs)^2))
+    ubrmse_val <- sqrt(mean(((sim - mean(sim)) - (obs - mean(obs)))^2))
+    
+    return(c(R = r_val, RMSE = rmse_val, ubRMSE = ubrmse_val))
+  }
   
   # Safely handle user's plotting parameters so we don't permanently override them
   old_par <- graphics::par(no.readonly = TRUE)
@@ -66,9 +81,9 @@ lis_compare_outputs <- function(folder_1, folder_2, start_date, end_date,
   ts_2 <- list()
   
   for (i in seq_along(common_dates)) {
-    # Note: convert_netcdf_to_stacked_raster must be loaded in your package namespace
-    r_all_1 <- convert_netcdf_to_stacked_raster(nc_file = files_1_sub[i], var_names = base_var, nc_type = nc_type_1)
-    r_all_2 <- convert_netcdf_to_stacked_raster(nc_file = files_2_sub[i], var_names = base_var, nc_type = nc_type_2)
+    # Note: nc_to_raster must be loaded in your package namespace
+    r_all_1 <- nc_to_raster(nc_file = files_1_sub[i], var_names = base_var, nc_type = nc_type_1)
+    r_all_2 <- nc_to_raster(nc_file = files_2_sub[i], var_names = base_var, nc_type = nc_type_2)
     
     # Extract the specific layers requested
     ts_1[[i]] <- r_all_1[[var_1]]

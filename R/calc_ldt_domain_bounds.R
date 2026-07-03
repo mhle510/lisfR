@@ -10,7 +10,9 @@
 #' @param buffer_coef Buffer coefficient applied to dx and dy. Default is 1.5.
 #' @param decimals Number of decimals for rounded domain edges. Default is 4.
 #' @param target_crs Target CRS for longitude/latitude calculation. Default is 4326.
-#'
+#' @param plot Logical. If TRUE, generates a diagnostic plot of the domain bounds.
+#' @param verbose Logical. If TRUE, prints progress messages during execution.
+#' 
 #' @return A named list with lower-left lat/lon, upper-right lat/lon, dx, dy, and domain edges.
 #' @export
 calc_ldt_domain_bounds <- function(
@@ -70,7 +72,7 @@ calc_ldt_domain_bounds <- function(
     on.exit(graphics::par(op), add = TRUE)
     
     # Base canvas
-    plot(
+    graphics::plot(
       NA, NA,
       xlim = c(xr[1] - xpad, xr[2] + xpad),
       ylim = c(yr[1] - ypad, yr[2] + ypad),

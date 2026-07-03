@@ -1,13 +1,13 @@
 #' (Internal) Convert Raster Longitude from 0-360 to -180/180
 #'
 #' @description 
-#' Splits a SpatRaster with longitude range [0, 360] into two parts, shifts the 
-#' [180, 360] portion to [-180, 0], and merges them back into a single raster 
-#' with standard longitude range [-180, 180].
+#' Splits a SpatRaster with longitude range (0 to 360) into two parts, shifts the 
+#' (180 to 360) portion to (-180 to 0), and merges them back into a single raster 
+#' with standard longitude range (-180 to 180).
 #'
-#' @param raster A \code{terra::SpatRaster} object with longitude extent within [0, 360].
+#' @param raster A \code{terra::SpatRaster} object with longitude extent within (0, 360).
 #'
-#' @return A \code{terra::SpatRaster} object with longitude extent within [-180, 180].
+#' @return A \code{terra::SpatRaster} object with longitude extent within (-180, 180).
 #' @keywords internal
 .convert_0_360_to_0_180 <- function(raster) {
   
