@@ -2,7 +2,7 @@
 
 **R tools for working with large-scale hydrological modeling output and processing satellite datasets.**
 
-`lisfR` provides a collection of utility functions for reading, writing, and processing NetCDF outputs from land surface models (such as LIS and FLDAS) and satellite-derived datasets (including CHIRPS, MODIS, IMERG, and SWOT). It includes tools to:
+`lisfR` provides a collection of utility functions for reading, writing, and processing NetCDF outputs from land surface models (such as Land Information System Framework) and satellite-derived datasets (including CHIRPS, MODIS, IMERG, and SWOT). It includes tools to:
 
 - Convert NetCDF files into georeferenced raster stacks (`nc_to_raster`)
 - Export raster stacks back into NetCDF format (`raster_to_nc`)
