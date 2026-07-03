@@ -25,14 +25,14 @@ install.packages("remotes")
 ### 2. Install `lisfR` from GitHub
 
 ```r
-remotes::install_github("your-github-username/lisfR")
+remotes::install_github("mhle510/lisfR")
 ```
 
 Alternatively, if you prefer `devtools`:
 
 ```r
 install.packages("devtools")
-devtools::install_github("your-github-username/lisfR")
+devtools::install_github("mhle510/lisfR")
 ```
 
 ### 3. Load the package
