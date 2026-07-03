@@ -1,7 +1,7 @@
 Package: lisfR
 Title: R Tools for Open-Source Large-Scale Hydrological Models and Satellite Data
 Version: 1.0.0
-Authors@R: person("Manh-Hung", "Le", email = "manh-hung.le@nasa.gov", role = c("aut", "cre"))
+Authors@R: person("Manh-Hung", "Le", email = "manhhung.le510@gmail.com", role = c("aut", "cre"))
 Description: A collection of R utilities for reading, writing, and processing
     NetCDF outputs from land surface models such as LIS and FLDAS, along with
     satellite-derived datasets including CHIRPS, MODIS, and SWOT. Provides
