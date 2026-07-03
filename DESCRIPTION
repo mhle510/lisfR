@@ -1,8 +1,13 @@
 Package: lisfR
-Title: R Tools for LISF Workflows
+Title: R Tools for Open-Source Large-Scale Hydrological Models and Satellite Data
 Version: 1.0.0
 Authors@R: person("Manh-Hung", "Le", email = "manh-hung.le@nasa.gov", role = c("aut", "cre"))
-Description: R utilities for working with LISF
+Description: A collection of R utilities for reading, writing, and processing
+    NetCDF outputs from land surface models such as LIS and FLDAS, along with
+    satellite-derived datasets including CHIRPS, MODIS, and SWOT. Provides
+    tools to convert NetCDF files into georeferenced raster stacks, export
+    rasters back to NetCDF, calculate model domain boundaries from shapefiles,
+    and compare model outputs across ensembles and time.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -10,8 +15,5 @@ RoxygenNote: 7.3.2
 Imports:
     ncdf4,
     terra,
-    data.table,
     lubridate,
-    stringr,
-    tidyverse,
     sf

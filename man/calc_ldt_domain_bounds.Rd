@@ -27,6 +27,10 @@ calc_ldt_domain_bounds(
 \item{decimals}{Number of decimals for rounded domain edges. Default is 4.}
 
 \item{target_crs}{Target CRS for longitude/latitude calculation. Default is 4326.}
+
+\item{plot}{Logical. If TRUE, generates a diagnostic plot of the domain bounds.}
+
+\item{verbose}{Logical. If TRUE, prints progress messages during execution.}
 }
 \value{
 A named list with lower-left lat/lon, upper-right lat/lon, dx, dy, and domain edges.
